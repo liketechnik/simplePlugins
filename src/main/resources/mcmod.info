@@ -1,0 +1,16 @@
+[
+{
+  "modid": "simpleplugins",
+  "name": "Simple Plugins",
+  "description": "A mod for creating and loading simple plugins",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["liketechnik"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
