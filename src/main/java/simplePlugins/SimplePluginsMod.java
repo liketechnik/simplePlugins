@@ -2,10 +2,8 @@ package simplePlugins;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.common.event.*;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Logger;
 import simplePlugins.config.ModConfig;
 import simplePlugins.plugins.PluginManager;
@@ -39,8 +37,7 @@ public class SimplePluginsMod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = (Logger) event.getModLog();
-        logger.setLevel(ModConfig.developerOptions.logLevel.getLevel());
-        logger.info("Set up logger");
+        logger.setLevel(Level.DEBUG);
         
         pluginManager = new PluginManager();
         
@@ -55,10 +52,16 @@ public class SimplePluginsMod {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        logger.setLevel(ModConfig.developerOptions.logLevel.getLevel());
     }
     
     @Mod.EventHandler
     public void serverAboutToStart(FMLServerAboutToStartEvent event) {
         proxy.serverAboutToStart(event);
+    }
+    
+    @Mod.EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        proxy.serverStarting(event);
     }
 }

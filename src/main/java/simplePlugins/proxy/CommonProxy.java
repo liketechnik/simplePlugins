@@ -4,10 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import simplePlugins.SimplePluginsMod;
 
@@ -31,6 +28,10 @@ public class CommonProxy {
     
     public void serverAboutToStart(FMLServerAboutToStartEvent event) {
     
+    }
+    
+    public void serverStarting(FMLServerStartingEvent event) {
+        SimplePluginsMod.instance.pluginManager.registerCommands(event);
     }
     
     @SubscribeEvent

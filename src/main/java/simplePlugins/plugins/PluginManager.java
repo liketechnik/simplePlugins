@@ -1,10 +1,12 @@
 package simplePlugins.plugins;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 import simplePlugins.SimplePluginsMod;
 import simplePlugins.plugins.api.EventListener;
 import simplePlugins.plugins.api.Plugin;
+import simplePlugins.plugins.api.annotations.SimpleCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +31,7 @@ public class PluginManager {
     
     private List<Plugin> plugins = new LinkedList<>();
     private Queue<Plugin> events = new LinkedBlockingQueue<>();
+    private Queue<simplePlugins.plugins.api.commands.SimpleCommand> commands = new LinkedBlockingQueue<>();
     
     public void loadPlugins(File dir) {
         SimplePluginsMod.instance.logger.info("Loading plugins...");
@@ -90,6 +93,23 @@ public class PluginManager {
                     }
                 }
                 
+                Method[] methods = cl.getMethods();
+                for (Method method : methods) {
+                    SimpleCommand annotation = method.getAnnotation(SimpleCommand.class);
+                    if (annotation != null) {
+                       // Parameter[] params = method.getParameters();
+   
+                        if (method.getParameterCount() != 1) {
+                            logger.warn("Not adding command '" + annotation.name() + "'" +
+                                                " because of wrong parameter types.");
+                            continue;
+                        }
+                        
+                        simplePlugins.plugins.api.commands.SimpleCommand command = new simplePlugins.plugins.api.commands.SimpleCommand(annotation.name(), annotation.usage(), method, plugin);
+                        commands.add(command);
+                    }
+                }
+                
                 logger.info("Loaded Plugin '" + plugin.getName() + "'.");
             } else {
                 logger.warn("Couldn't load '" + pluginJar + "' because the main class '" +
@@ -111,6 +131,17 @@ public class PluginManager {
                                                                "'.");
             MinecraftForge.EVENT_BUS.register(events.remove());
         }
+        SimplePluginsMod.instance.logger.debug("registered plugin events");
+    }
+    
+    public void registerCommands(FMLServerStartingEvent event) {
+        SimplePluginsMod.instance.logger.debug("registering plugin commands");
+        for (simplePlugins.plugins.api.commands.SimpleCommand command : commands) {
+            SimplePluginsMod.instance.logger.debug("registering command '" +
+                                command.getName() + "' from plugin '" + command.getPlugin() + "'.");
+            event.registerServerCommand(command);
+        }
+        SimplePluginsMod.instance.logger.debug("registered plugin commands");
     }
     
     /**
@@ -134,6 +165,6 @@ public class PluginManager {
         // Use reflection
         Method method = clazz.getDeclaredMethod("addURL", new Class[]{URL.class});
         method.setAccessible(true);
-        method.invoke(classLoader, new Object[]{url});
+        method.invoke(classLoader, url);
     }
 }
