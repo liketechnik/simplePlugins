@@ -131,6 +131,11 @@ public class PluginManager {
                                                                "'.");
             MinecraftForge.EVENT_BUS.register(events.remove());
         }
+        for (Plugin plugin : plugins) {
+            SimplePluginsMod.instance.logger.debug("registering event classes " +
+                                                           "from '" + plugin.getName() + "' plugin.");
+            plugin.registerEventClasses();
+        }
         SimplePluginsMod.instance.logger.debug("registered plugin events");
     }
     
@@ -140,6 +145,11 @@ public class PluginManager {
             SimplePluginsMod.instance.logger.debug("registering command '" +
                                 command.getName() + "' from plugin '" + command.getPlugin() + "'.");
             event.registerServerCommand(command);
+        }
+        for (Plugin plugin : plugins) {
+            SimplePluginsMod.instance.logger.debug("registering command classes " +
+                                                           "from '" + plugin.getName() + "' plugin.");
+            plugin.registerCommandClasses(event);
         }
         SimplePluginsMod.instance.logger.debug("registered plugin commands");
     }
