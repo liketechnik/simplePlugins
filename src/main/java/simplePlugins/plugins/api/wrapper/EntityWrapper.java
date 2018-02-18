@@ -23,7 +23,7 @@ public class EntityWrapper {
      * @see EntityLivingBase#setPosition(double, double, double)
      */
     public static void forceTeleport(EntityLivingBase entity, double x, double y, double z) {
-        entity.setPosition(x, y, z);
+        entity.setPositionAndUpdate(x, y, z);
     }
     
     /**
