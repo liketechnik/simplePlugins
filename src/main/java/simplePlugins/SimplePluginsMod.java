@@ -8,7 +8,6 @@ import org.apache.logging.log4j.core.Logger;
 import simplePlugins.config.ModConfig;
 import simplePlugins.plugins.PluginManager;
 import simplePlugins.proxy.CommonProxy;
-import simplePlugins.utils.LogLevels;
 
 /**
  * @author Florian Warzecha
@@ -16,13 +15,13 @@ import simplePlugins.utils.LogLevels;
  * @date 14 of Februar 2018
  */
 @Mod(modid = SimplePluginsMod.MODID, name = SimplePluginsMod.MODNAME,
-        version = SimplePluginsMod.MODVERSION, dependencies = "required-after:forge@[14.23.0.2491,)",
+        version = SimplePluginsMod.MODVERSION, dependencies = "required-after:forge@[14.23.2.2618,)",
         acceptedMinecraftVersions = "1.12")
 public class SimplePluginsMod {
     
     public static final String MODID = "simpleplugins";
     public static final String MODNAME = "Simple Plugins";
-    public static final String MODVERSION = "1.2-1";
+    public static final String MODVERSION = "1.2.1-1";
     
     @SidedProxy(clientSide = "simplePlugins.proxy.ClientProxy",
             serverSide = "simplePlugins.proxy.ServerProxy")
