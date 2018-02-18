@@ -2,7 +2,7 @@
 Create simple minecraft _mods_(Plugins) without setting up a complete forge development environment.
 
 ## Usage
-Clone the blueprint repo version matching the version of SimplePlugins you want to use or download the .zip-Archive of it and extract it (You can rename the directory containing the extracted files to anything you want). The link to the correct blueprint version and the download of the .zip-Archive can be found alongside every [release][https://github.com/liketechnik/simplePlugins/releases] of SimplePlugins.
+Clone the blueprint repo version matching the version of SimplePlugins you want to use or download the .zip-Archive of it and extract it (You can rename the directory containing the extracted files to anything you want). The link to the correct blueprint version and the download of the .zip-Archive can be found alongside every [release](https://github.com/liketechnik/simplePlugins/releases) of SimplePlugins.
 
 Inside the directory, run ```gradlew setupDecompWorkspace``` to initialize forge. Then, depending on the IDE you use, run ```gradlew eclipse``` or ```gradlew idea genIntellijRuns```.
 
@@ -12,10 +12,10 @@ You can now begin creating your plugin:
 - Either delete and start from scratch or rename the default plugin class
 - Enter the name into the manifest attributes
 
-Look at the [wiki][https://github.com/liketechnik/simplePlugins/wiki] to get an idea of how achieve certain things.
+Look at the [wiki](https://github.com/liketechnik/simplePlugins/wiki) to get an idea of how achieve certain things.
 
 ## Bug Reports
-Please report any and all issues you encounter while using this mod on the [issue tracker][https://github.com/liketechnik/simplePlugins/issues]. It is important to include the SimplePlugins, Minecraft and Forge version you are using, in your reports/ideas/suggestions.
+Please report any and all issues you encounter while using this mod on the [issue tracker](https://github.com/liketechnik/simplePlugins/issues). It is important to include the SimplePlugins, Minecraft and Forge version you are using, in your reports/ideas/suggestions.
 
 ## Documentation
 Most things are either documented right inside the source code or are already documented by forge. For all other things, you can take a look into the wiki.
@@ -35,5 +35,5 @@ If you want to work on SimplePlugins, clone the repository and initialize the fo
 - The numbers can only increase for the same MC version, after a new MC Version, all other numbers are reset to 0
 
 ## Acknowledgements
-Thanks to the [Forge project][http://files.minecraftforge.net/] for creating a great framework for modding minecraft. Without forge, this would not be possible.
-I had the idea for this mod after I met the [Canary project][https://github.com/CanaryModTeam/CanaryMod], a framework for creating server side plugins for minecraft. Sadly, the latest version was made for the minecraft version 1.8, which was one of the reasons for me to start this project.
+Thanks to the [Forge project](http://files.minecraftforge.net/) for creating a great framework for modding minecraft. Without forge, this would not be possible.
+I had the idea for this mod after I met the [Canary project](https://github.com/CanaryModTeam/CanaryMod), a framework for creating server side plugins for minecraft. Sadly, the latest version was made for the minecraft version 1.8, which was one of the reasons for me to start this project.
