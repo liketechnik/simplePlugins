@@ -1,0 +1,10 @@
+Version 1.3.1-1
+
+- added various wrapper methods:
+    -> remove / check if a block exists at a given position
+    -> send messages to players
+    -> get item types
+    -> spawn entities
+
+- readme added
+- changelog added
