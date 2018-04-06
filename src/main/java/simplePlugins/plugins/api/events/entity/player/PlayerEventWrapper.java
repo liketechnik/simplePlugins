@@ -2,7 +2,7 @@ package simplePlugins.plugins.api.events.entity.player;
 
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import simplePlugins.plugins.api.events.entity.living.LivingEventWrapper;
-import simplePlugins.plugins.api.wrapper.EntityPlayerWrapper;
+import simplePlugins.plugins.api.wrappers.EntityPlayerWrapper;
 
 /**
  * @author Florian Warzecha

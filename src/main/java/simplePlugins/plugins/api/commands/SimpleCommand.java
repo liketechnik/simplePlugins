@@ -6,7 +6,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import simplePlugins.plugins.api.Plugin;
-import simplePlugins.plugins.api.wrapper.EntityPlayerWrapper;
+import simplePlugins.plugins.api.wrappers.EntityPlayerWrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
