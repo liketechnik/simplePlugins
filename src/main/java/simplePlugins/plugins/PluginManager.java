@@ -7,6 +7,7 @@ import simplePlugins.SimplePluginsMod;
 import simplePlugins.plugins.api.EventListener;
 import simplePlugins.plugins.api.Plugin;
 import simplePlugins.plugins.api.annotations.SimpleCommand;
+import simplePlugins.plugins.api.events.entity.player.itemUseEvent.ItemUseEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,15 @@ public class PluginManager {
     
     private List<Plugin> plugins = new LinkedList<>();
     private Queue<Plugin> events = new LinkedBlockingQueue<>();
+    private Queue<Method> wrappedEvents = new LinkedBlockingQueue<>();
+    private Queue<Plugin> wrappedEventsPlugins = new LinkedBlockingQueue<>();
     private Queue<simplePlugins.plugins.api.commands.SimpleCommand> commands = new LinkedBlockingQueue<>();
+    
+    private static List<Class<?>> eventWrappers = new LinkedList<>();
+    
+    static {
+        eventWrappers.add(ItemUseEvent.class);
+    }
     
     public void loadPlugins(File dir) {
         SimplePluginsMod.instance.logger.info("Loading plugins...");
@@ -95,6 +104,16 @@ public class PluginManager {
                 
                 Method[] methods = cl.getMethods();
                 for (Method method : methods) {
+                    int parameters = method.getParameterCount();
+                    if (parameters == 1) {
+                        Class<?>[] parameterTypes = method.getParameterTypes();
+                        if (eventWrappers.contains(parameterTypes[0])) {
+                            wrappedEvents.add(method);
+                            wrappedEventsPlugins.add(plugin);
+                            continue;
+                        }
+                    }
+                    
                     SimpleCommand annotation = method.getAnnotation(SimpleCommand.class);
                     if (annotation != null) {
                        // Parameter[] params = method.getParameters();
@@ -102,11 +121,10 @@ public class PluginManager {
                         if (method.getParameterCount() != 1) {
                             logger.warn("Not adding command '" + annotation.name() + "'" +
                                                 " because of wrong parameter types.");
-                            continue;
+                        } else {
+                            simplePlugins.plugins.api.commands.SimpleCommand command = new simplePlugins.plugins.api.commands.SimpleCommand(annotation.name(), annotation.usage(), method, plugin);
+                            commands.add(command);
                         }
-                        
-                        simplePlugins.plugins.api.commands.SimpleCommand command = new simplePlugins.plugins.api.commands.SimpleCommand(annotation.name(), annotation.usage(), method, plugin);
-                        commands.add(command);
                     }
                 }
                 
@@ -131,6 +149,25 @@ public class PluginManager {
                                                                "'.");
             MinecraftForge.EVENT_BUS.register(events.remove());
         }
+        
+        while (!wrappedEvents.isEmpty()) {
+            Method event = wrappedEvents.remove();
+            try {
+                Method converterGetter = event.getParameterTypes()[0].getMethod("getConverter");
+                Class<?> converterClass = (Class<?>) converterGetter.invoke(null);
+                MinecraftForge.EVENT_BUS.register(converterClass.getConstructor(Method.class, Plugin.class).newInstance(event, wrappedEventsPlugins.remove()));
+//                ItemUseEventConverter converter = (ItemUseEventConverter) event.getParameterTypes()[0].getConstructor(Method.class).newInstance(event);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+        
         for (Plugin plugin : plugins) {
             SimplePluginsMod.instance.logger.debug("registering event classes " +
                                                            "from '" + plugin.getName() + "' plugin.");
@@ -173,7 +210,7 @@ public class PluginManager {
         Class clazz = URLClassLoader.class;
         
         // Use reflection
-        Method method = clazz.getDeclaredMethod("addURL", new Class[]{URL.class});
+        Method method = clazz.getDeclaredMethod("addURL", URL.class);
         method.setAccessible(true);
         method.invoke(classLoader, url);
     }
