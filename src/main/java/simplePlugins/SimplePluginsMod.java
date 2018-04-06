@@ -21,7 +21,7 @@ public class SimplePluginsMod {
     
     public static final String MODID = "simpleplugins";
     public static final String MODNAME = "Simple Plugins";
-    public static final String MODVERSION = "1.4.1-1-unstable2";
+    public static final String MODVERSION = "1.4.1-1-unstable3";
     
     @SidedProxy(clientSide = "simplePlugins.proxy.ClientProxy",
             serverSide = "simplePlugins.proxy.ServerProxy")

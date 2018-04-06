@@ -3,6 +3,7 @@ package simplePlugins.plugins.api.events.entity;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.event.entity.EntityEvent;
 import simplePlugins.plugins.api.events.EventWrapper;
+import simplePlugins.plugins.api.wrappers.entity.EntityWrapper;
 
 /**
  * @author Florian Warzecha
@@ -12,14 +13,16 @@ import simplePlugins.plugins.api.events.EventWrapper;
 public class EntityEventWrapper extends EventWrapper {
     
     private EntityEvent event;
+    private EntityWrapper entityWrapper;
     
     public EntityEventWrapper(EntityEvent event) {
         super(event);
         this.event = event;
+        this.entityWrapper = new EntityWrapper(event.getEntity());
     }
     
-    public Entity getEntity() {
-        return this.event.getEntity();
+    public EntityWrapper getEntity() {
+        return this.entityWrapper;
     }
     
     @Override

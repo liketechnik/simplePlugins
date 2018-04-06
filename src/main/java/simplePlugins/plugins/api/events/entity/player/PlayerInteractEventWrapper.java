@@ -20,22 +20,6 @@ public class PlayerInteractEventWrapper extends PlayerEventWrapper {
         this.event = event;
     }
     
-    public ItemStack getItemStack() {
-        return this.event.getItemStack();
-    }
-    
-    public BlockPos getPos() {
-        return this.event.getPos();
-    }
-    
-    public World getWorld() {
-        return this.event.getWorld();
-    }
-    
-    public Side getSide() {
-        return this.event.getSide();
-    }
-    
     public PlayerInteractEvent getUnwrapped() {
         return this.event;
     }

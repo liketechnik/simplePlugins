@@ -21,10 +21,6 @@ public class EventWrapper {
         }
     }
     
-    public boolean isCancelable() {
-        return event.isCancelable();
-    }
-    
     public Event getUnwrapped() {
         return this.event;
     }

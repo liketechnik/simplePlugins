@@ -1,8 +1,8 @@
 package simplePlugins.plugins.api.events.entity.living;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import simplePlugins.plugins.api.events.entity.EntityEventWrapper;
+import simplePlugins.plugins.api.wrappers.entity.EntityLivingBaseWrapper;
 
 /**
  * @author Florian Warzecha
@@ -12,14 +12,16 @@ import simplePlugins.plugins.api.events.entity.EntityEventWrapper;
 public class LivingEventWrapper extends EntityEventWrapper {
     
     private LivingEvent event;
+    private EntityLivingBaseWrapper entityLivingBaseWrapper;
     
     public LivingEventWrapper(LivingEvent event) {
         super(event);
         this.event = event;
+        this.entityLivingBaseWrapper = new EntityLivingBaseWrapper(event.getEntityLiving());
     }
     
-    public EntityLivingBase getEntityLiving() {
-        return this.event.getEntityLiving();
+    public EntityLivingBaseWrapper getEntityLiving() {
+        return this.entityLivingBaseWrapper;
     }
     
     @Override
