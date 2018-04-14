@@ -10,6 +10,8 @@
 
 .. java:import:: simplePlugins.plugins.api Plugin
 
+.. java:import:: simplePlugins.plugins.api.wrappers EntityPlayerWrapper
+
 .. java:import:: java.lang.reflect InvocationTargetException
 
 .. java:import:: java.lang.reflect Method
@@ -38,12 +40,6 @@ execute
 ^^^^^^^
 
 .. java:method:: @Override public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
-   :outertype: SimpleCommand
-
-execute
-^^^^^^^
-
-.. java:method:: public void execute(EntityPlayer player)
    :outertype: SimpleCommand
 
 getName
