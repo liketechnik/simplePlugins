@@ -2,6 +2,7 @@ package simplePlugins.plugins.api.events.entity.player.itemUseEvent;
 
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import simplePlugins.plugins.api.events.entity.player.PlayerInteractEventWrapper;
+import simplePlugins.plugins.api.wrappers.WorldWrapper;
 
 /**
  * @author Florian Warzecha
@@ -11,10 +12,16 @@ import simplePlugins.plugins.api.events.entity.player.PlayerInteractEventWrapper
 public class ItemUseEvent extends PlayerInteractEventWrapper {
     
     private PlayerInteractEvent.RightClickItem event;
+    private WorldWrapper worldWrapper;
     
     public ItemUseEvent(PlayerInteractEvent.RightClickItem event) {
         super(event);
         this.event = event;
+        this.worldWrapper = new WorldWrapper(event.getWorld());
+    }
+    
+    public WorldWrapper getWorld() {
+        return this.worldWrapper;
     }
     
     @Override

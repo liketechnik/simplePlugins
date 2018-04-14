@@ -6,6 +6,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import simplePlugins.plugins.api.wrappers.WorldWrapper;
 
 /**
  * @author Florian Warzecha
@@ -15,9 +16,11 @@ import net.minecraft.util.text.TextFormatting;
 public class EntityWrapper {
     
     private Entity entity;
+    private WorldWrapper worldWrapper;
     
     public EntityWrapper(Entity entity) {
         this.entity = entity;
+        this.worldWrapper = new WorldWrapper(entity.getEntityWorld());
     }
     
     public Entity getUnwrapped() {
@@ -30,6 +33,10 @@ public class EntityWrapper {
     
     public void forceTeleport(BlockPos pos) {
         this.entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+    }
+    
+    public WorldWrapper getWorld() {
+        return this.worldWrapper;
     }
     
     public void sendMessageTo(String message, TextFormatting color) {
