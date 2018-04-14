@@ -6,6 +6,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import simplePlugins.plugins.api.Plugin;
+import simplePlugins.plugins.api.wrappers.EntityPlayerWrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -50,9 +51,9 @@ public class SimpleCommand extends CommandBase {
         }
     }
     
-    public void execute(EntityPlayer player) {
+    private void execute(EntityPlayer player) {
         try {
-            command.invoke(plugin, player);
+            command.invoke(plugin, new EntityPlayerWrapper(player));
         } catch (IllegalAccessException | InvocationTargetException e) {
             plugin.logger.error("Couldn't execute command '" + this.name + "'.");
             e.printStackTrace();
