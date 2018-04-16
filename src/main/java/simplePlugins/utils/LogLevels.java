@@ -27,20 +27,4 @@ public enum LogLevels {
     public Level getLevel() {
         return level;
     }
-    
-    public static void enableDebugLog(String appender) {
-        Logger logger = SimplePluginsMod.instance.logger;
-    
-        AppenderRef refConsoleLog = AppenderRef.createAppenderRef(appender, Level.ALL, null);
-    
-        LoggerConfig loggerConfig = LoggerConfig.createLogger(false, Level.ALL,
-                SimplePluginsMod.MODID, "true",
-                new AppenderRef[]{refConsoleLog}, null,
-                logger.getContext().getConfiguration(), null);
-    
-        loggerConfig.addAppender(logger.getAppenders().get(appender), Level.ALL, null);
-    
-        logger.getContext().getConfiguration().addLogger(SimplePluginsMod.MODID, loggerConfig);
-        logger.getContext().updateLoggers();
-    }
 }

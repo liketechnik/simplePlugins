@@ -9,11 +9,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.server.FMLServerHandler;
 import simplePlugins.ModBlocks;
 import simplePlugins.ModItems;
 import simplePlugins.SimplePluginsMod;
-import simplePlugins.utils.LogLevels;
 
 import java.io.File;
 
@@ -27,7 +25,6 @@ public class ClientProxy extends CommonProxy {
     
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        LogLevels.enableDebugLog("FmlSysOut");
         SimplePluginsMod.instance.pluginManager.loadPlugins(
                 new File(Minecraft.getMinecraft().mcDataDir, "plugins"));
     }
