@@ -6,5 +6,6 @@ simplePlugins.plugins.api.commands
 .. toctree::
    :maxdepth: 1
 
+   ParamCommand
    SimpleCommand
 

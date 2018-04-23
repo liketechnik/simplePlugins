@@ -18,10 +18,10 @@ import java.lang.reflect.Method;
  */
 public class SimpleCommand extends CommandBase {
     
-    private String name;
-    private String usage;
-    private Method command;
-    private Plugin plugin;
+    protected String name;
+    protected String usage;
+    protected Method command;
+    protected Plugin plugin;
     
     public SimpleCommand(String name, String usage, Method command, Plugin plugin) {
         this.name = name;

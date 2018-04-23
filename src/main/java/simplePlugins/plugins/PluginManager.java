@@ -6,8 +6,10 @@ import org.apache.logging.log4j.Logger;
 import simplePlugins.SimplePluginsMod;
 import simplePlugins.plugins.api.EventListener;
 import simplePlugins.plugins.api.Plugin;
+import simplePlugins.plugins.api.annotations.ParamCommand;
 import simplePlugins.plugins.api.annotations.SimpleCommand;
 import simplePlugins.plugins.api.events.entity.player.itemUseEvent.ItemUseEvent;
+import simplePlugins.plugins.api.wrappers.EntityPlayerWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+
+import static simplePlugins.utils.Reflection.checkParams;
 
 /**
  * @author Florian Warzecha
@@ -118,13 +122,25 @@ public class PluginManager {
                     if (annotation != null) {
                        // Parameter[] params = method.getParameters();
    
-                        if (method.getParameterCount() != 1) {
+                        if (!checkParams(method, EntityPlayerWrapper.class)) {
                             logger.warn("Not adding command '" + annotation.name() + "'" +
                                                 " because of wrong parameter types.");
                         } else {
                             simplePlugins.plugins.api.commands.SimpleCommand command = new simplePlugins.plugins.api.commands.SimpleCommand(annotation.name(), annotation.usage(), method, plugin);
                             commands.add(command);
                         }
+                        continue;
+                    }
+    
+                    ParamCommand pAnnotation = method.getAnnotation(ParamCommand.class);
+                    if (pAnnotation != null) {
+                       if (!checkParams(method, EntityPlayerWrapper.class, String[].class)) {
+                           logger.warn("Not adding command '" + pAnnotation.name() + "'" +
+                                               " because of wrong parameter types");
+                       } else {
+                           simplePlugins.plugins.api.commands.ParamCommand command = new simplePlugins.plugins.api.commands.ParamCommand(pAnnotation.name(), pAnnotation.usage(), pAnnotation.paramsUsage(), method, plugin);
+                           commands.add(command);
+                       }
                     }
                 }
                 

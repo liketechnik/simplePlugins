@@ -26,6 +26,32 @@ SimpleCommand
 
    :author: Florian Warzecha
 
+Fields
+------
+command
+^^^^^^^
+
+.. java:field:: protected Method command
+   :outertype: SimpleCommand
+
+name
+^^^^
+
+.. java:field:: protected String name
+   :outertype: SimpleCommand
+
+plugin
+^^^^^^
+
+.. java:field:: protected Plugin plugin
+   :outertype: SimpleCommand
+
+usage
+^^^^^
+
+.. java:field:: protected String usage
+   :outertype: SimpleCommand
+
 Constructors
 ------------
 SimpleCommand
